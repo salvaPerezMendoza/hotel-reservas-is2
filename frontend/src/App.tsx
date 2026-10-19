@@ -28,7 +28,10 @@ const Auditoria = lazy(() => import('@/paginas/admin/Auditoria'))
 
 function SubirAlNavegar() {
   const { pathname } = useLocation()
-  useEffect(() => window.scrollTo(0, 0), [pathname])
+  useEffect(() => {
+    // Con llaves: en Chrome nuevo scrollTo devuelve una promesa y React la tomaría como función de limpieza.
+    window.scrollTo(0, 0)
+  }, [pathname])
   return null
 }
 
