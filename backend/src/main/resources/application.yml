@@ -34,7 +34,7 @@ app:
   zona-horaria: America/Argentina/Buenos_Aires
   prefijo-codigo: AUR
   url-frontend: ${FRONTEND_URL:http://localhost:5173}
-  cors-origenes: ${CORS_ORIGINS:http://localhost:5173,http://localhost:3000}
+  cors-origenes: ${CORS_ORIGINS:http://localhost:5173,http://127.0.0.1:5173,http://localhost:3000}
   jwt:
     secreto: ${JWT_SECRET:cambiar-este-secreto-en-produccion-hotel-aurora-is2-grupo11}
     horas-validez: 12
@@ -56,3 +56,7 @@ management:
     web:
       exposure:
         include: health
+  health:
+    mail:
+      # El mail es opcional (MAIL_ENABLED); que no haya SMTP no deja al sistema fuera de servicio.
+      enabled: false

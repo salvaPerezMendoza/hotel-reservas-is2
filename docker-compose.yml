@@ -1,0 +1,51 @@
+# Levanta el sistema completo: docker compose up --build
+# Sitio:  http://localhost:3000     Mails de prueba (Mailpit): http://localhost:8025
+services:
+  db:
+    image: postgres:16.6-alpine
+    environment:
+      POSTGRES_DB: hotel
+      POSTGRES_USER: hotel
+      POSTGRES_PASSWORD: hotel
+    volumes:
+      - datos-db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U hotel -d hotel"]
+      interval: 5s
+      retries: 10
+
+  mail:
+    image: axllent/mailpit:v1.21.8
+    ports:
+      - "8025:8025"
+
+  backend:
+    build: ./backend
+    environment:
+      DB_URL: jdbc:postgresql://db:5432/hotel
+      DB_USER: hotel
+      DB_PASSWORD: hotel
+      MAIL_ENABLED: "true"
+      MAIL_HOST: mail
+      MAIL_PORT: "1025"
+      FRONTEND_URL: http://localhost:3000
+      JWT_SECRET: ${JWT_SECRET:-secreto-de-desarrollo-hotel-aurora-grupo11-cambiar}
+      DEMO_DATA: "true"
+    depends_on:
+      db:
+        condition: service_healthy
+      mail:
+        condition: service_started
+    ports:
+      - "8080:8080"
+
+  frontend:
+    build: ./frontend
+    depends_on:
+      backend:
+        condition: service_healthy
+    ports:
+      - "3000:80"
+
+volumes:
+  datos-db:

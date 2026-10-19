@@ -1,0 +1,98 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    color-scheme: light;
+  }
+  body {
+    @apply bg-neblina font-sans text-noche antialiased;
+    font-size: 16px;
+    line-height: 1.55;
+  }
+  h1, h2, h3 {
+    @apply font-titulo font-normal tracking-tight;
+    line-height: 1.15;
+  }
+  :focus-visible {
+    outline: 2px solid #7466a8;
+    outline-offset: 2px;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+@layer components {
+  .boton {
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-5 py-2.5 text-[15px] font-semibold transition-colors disabled:cursor-not-allowed disabled:opacity-50;
+  }
+  .boton-primario {
+    @apply boton bg-noche text-white hover:bg-noche-700;
+  }
+  .boton-reservar {
+    @apply boton bg-alba text-noche hover:bg-alba-300;
+  }
+  .boton-secundario {
+    @apply boton border border-neblina-300 bg-white text-noche hover:border-noche-600;
+  }
+  .boton-peligro {
+    @apply boton bg-alerta text-white hover:opacity-90;
+  }
+  .boton-texto {
+    @apply inline-flex items-center gap-1 font-semibold text-lavanda-600 underline-offset-4 hover:underline;
+  }
+  /* Las cifras van en Figtree: los numerales de Marcellus se confunden (1 parece I). */
+  .cifra {
+    @apply font-sans font-semibold tabular-nums tracking-tight;
+  }
+  .etiqueta {
+    @apply mb-1.5 block text-sm font-medium text-pizarra;
+  }
+  .campo {
+    @apply w-full rounded-xl border border-neblina-300 bg-white px-3.5 py-2.5 text-[15px] text-noche placeholder:text-pizarra-400 focus:border-lavanda-600 focus:outline-none focus:ring-2 focus:ring-lavanda-100;
+  }
+  .panel {
+    @apply rounded-2xl bg-white p-5 ring-1 ring-neblina-200 sm:p-6;
+  }
+  .tabla {
+    @apply w-full text-left text-sm;
+  }
+  .tabla th {
+    @apply border-b border-neblina-200 pb-2 pr-4 font-medium text-pizarra;
+  }
+  .tabla td {
+    @apply border-b border-neblina-200 py-3 pr-4 align-top;
+  }
+  .tabla tr:last-child td {
+    @apply border-b-0;
+  }
+}
+
+/* Cielo del amanecer para el encabezado de la portada */
+.cielo-aurora {
+  background:
+    radial-gradient(120% 90% at 85% 110%, rgba(233, 169, 59, 0.55) 0%, rgba(233, 169, 59, 0) 55%),
+    radial-gradient(90% 70% at 15% 100%, rgba(185, 174, 220, 0.55) 0%, rgba(185, 174, 220, 0) 60%),
+    linear-gradient(180deg, #16213a 0%, #22304f 45%, #4a5884 100%);
+}
+
+@keyframes salir-sol {
+  from { transform: translateY(26px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+.sol-saliendo {
+  animation: salir-sol 1.6s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+@keyframes barra-pago {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(250%); }
+}
+.barra-pago {
+  animation: barra-pago 1.2s ease-in-out infinite;
+}
