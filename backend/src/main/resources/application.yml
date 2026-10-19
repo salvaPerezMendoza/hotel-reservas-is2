@@ -1,0 +1,58 @@
+server:
+  port: ${PORT:8080}
+  error:
+    include-message: always
+
+spring:
+  application:
+    name: hotel-reservas
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/hotel}
+    username: ${DB_USER:postgres}
+    password: ${DB_PASSWORD:postgres}
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        jdbc:
+          time_zone: UTC
+  flyway:
+    enabled: true
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+  mail:
+    host: ${MAIL_HOST:localhost}
+    port: ${MAIL_PORT:1025}
+    properties:
+      mail.smtp.connectiontimeout: 3000
+      mail.smtp.timeout: 3000
+
+app:
+  zona-horaria: America/Argentina/Buenos_Aires
+  prefijo-codigo: AUR
+  url-frontend: ${FRONTEND_URL:http://localhost:5173}
+  cors-origenes: ${CORS_ORIGINS:http://localhost:5173,http://localhost:3000}
+  jwt:
+    secreto: ${JWT_SECRET:cambiar-este-secreto-en-produccion-hotel-aurora-is2-grupo11}
+    horas-validez: 12
+  mail:
+    # Si está deshabilitado, los mails se escriben en el log en lugar de enviarse.
+    habilitado: ${MAIL_ENABLED:false}
+    remitente: ${MAIL_FROM:reservas@hotelaurora.com.ar}
+  pagos:
+    # Segundos que tarda la pasarela simulada en "procesar" un pago.
+    demora-segundos: ${PAGO_DEMORA_SEGUNDOS:3}
+  datos-demo: ${DEMO_DATA:true}
+
+logging:
+  level:
+    ar.fiuba.is2.hotel: INFO
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
